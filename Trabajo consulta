@@ -1,0 +1,63 @@
+```
+// Función para calcular la integral usando el metodo de Simpson 1/3
+def integracion(f: Double => Double, a: Double, b: Double): Double = {
+  val x = (a + b) / 2
+  (b - a) / 6 * (f(a) + 4 * f(x) + f(b))
+}
+
+// Integrales
+def f1(x: Double): Double = -x * x + 8 * x - 12
+def f2(x: Double): Double = 3 * x * x
+def f3(x: Double): Double = x + 2 * x * x - math.pow(x, 3) + 5 * math.pow(x, 4)
+def f4(x: Double): Double = (2 * x + 1) / (x * x + x)
+def f5(x: Double): Double = math.exp(x)
+def f6(x: Double): Double = 1 / (x - 1)
+def f7(x: Double): Double = 1 / (1 + x * x)
+
+// Intervalos de integración
+val limites: List[(Double, Double)] = List(
+  (3.0, 5.0), // limites para f1
+  (1.0, 2.0), // limites para f2
+  (0.0, 1.0), // limites para f3
+  (1.0, 2.0), // limites para f4
+  (0.0, 1.0), // limites para f5
+  (1.5, 2.0), // limites para f6
+  (0.0, 1.0) // limites para f7
+)
+
+// Aproximaciones
+val valoresEsperados: List[Double] = List(
+  7.33,    // Resultado para f1
+  8.0,     // Resultado para f2
+  3.333,   // Resultado para f3
+  1.09861, // Resultado para f4
+  1.71828, // Resultado para f5
+  0.828427, // Resultado para f6
+  0.785398  // Resultado para f7
+)
+// Función para calcular el error absoluto
+def calcularError(valorEsperado: Double, valorObtenido: Double): Double = {
+  val diferencia = valorEsperado - valorObtenido
+  if (diferencia < 0) -diferencia else diferencia
+}
+
+// Aproximación de las integrales y cálculo de errores
+val funciones:List[Double=>Double]=List(f1,f2,f3,f4,f5,f6,f7)
+for (i <- funciones.indices) {
+  val f = funciones(i) //Obtiene la funcion actual
+  val (a, b) = limites(i)//Obtiente los limites de integracion
+  val valorObtenido = integracion(f, a, b)
+  val error = calcularError(valoresEsperados(i), valorObtenido)
+  print(" Integral Obtenida : " + valorObtenido + " Calcular el Error:" + error)
+```
+
+AQUI SE MOSTRARAN LOS RESULTADOS 
+
+```
+Integral Obtenida : 7.333333333333333   Calcular el Error:0.0033333333333329662 
+Integral Obtenida : 7.0                 Calcular el Error:1.0 
+Integral Obtenida : 1.9583333333333333  Calcular el Error:1.374666666666667
+Integral Obtenida : 1.0999999999999999  Calcular el Error:0.0013899999999997803 
+Integral Obtenida : 1.7188611518765928  Calcular el Error:5.811518765928003E-4 
+Integral Obtenida : 0.6944444444444443  Calcular el Error:0.13398255555555572 
+Integral Obtenida : 0.7833333333333333  Calcular el Error:0.0020646666666667146
